@@ -1,111 +1,41 @@
-#include "database.h"
-#include <string.h>
 #include <stdio.h>
-#include <stdlib.h>
-//struct node define
-typedef struct node{
-    char data;
-    struct node *next;
-}node;
-//new node function define
-node *newnode(char v){
-    node *n1 = malloc(sizeof(node));
-    n1->next = NULL;
-    n1->data = v;
-    return n1;
-}
-//find a substring in the data
-char* find(char *filepath, char *v){
-    char *data = serialize(filepath);
-    char *str = strstr(data,v);
-    if(str!=NULL){
-        printf("substring is present in mainstring \nremaining string is %s", str);
-    }
-    else{
-        return 0;
-    }
-    return str;
-}
-//wasnt sure what to do in project function so just created a key value pair
-struct keyval *project(char *filepath){
-    struct keyval *key1 = NULL;
-    key1->key = NULL;
-    key1->val = filepath;
-    printf("created project for %C", filepath);
-    return key1;
-}
-//filtered all characters except specified into a separate linked list
-node* filter(char *filepath, char v){
-    char *data = serialize(filepath);
+#include "core/structures.h"
+// string filepath, obj object
+// fprintf(fpt, "hello");
+    // // 
+void insert(string filepath, obj clr, int no_of_keywal_in_obj){
+    FILE *fpt = fopen(filepath, "a");
     int i;
-    node *head = newnode('a');
-    node* n1;
     for(i=0;i<20;i++){
-        if(data[i]!=v){
-            // printf("yes");
-            if(head->next == NULL){
-                n1 = newnode(data[i]);
-                head->next = n1;
-            }
-            else{
-                node *headref = head;
-                while(headref->next != NULL){
-                    headref = headref->next;
-                }
-                n1 = newnode(data[i]);
-                headref->next = n1;
-            }
-        }
+        fprintf(fpt, "%s\n",clr[no_of_keywal_in_obj].val);
     }
-    node *headref1 = head;
-    headref1 = headref1->next;
-    while(headref1!=NULL){
-        printf("%c", headref1->data);
-        headref1 = headref1->next;
-    }
-    return head;
+    fclose(fpt);
 }
-//filtered all characters specified
-node *group(char *filepath, char v){
-        char *data = serialize(filepath);
-    int i;
-    node *head = newnode('a');
-    node* n1;
-    for(i=0;i<20;i++){
-        if(data[i]!=v){
-            if(head->next == NULL){
-                n1 = newnode(data[i]);
-                head->next = n1;
-            }
-            else{
-                node *headref = head;
-                while(headref->next != NULL){
-                    headref = headref->next;
-                }
-                n1 = newnode(data[i]);
-                headref->next = n1;
-            }
-        }
-    }
-    node *headref1 = head;
-    headref1 = headref1->next;
-    while(headref1!=NULL){
-        printf("%c", headref1->data);
-        headref1 = headref1->next;
-    }
-    return head;
-}
-//main function
+
+
 int main(void){
-    return 0;
+    //"./data/db.csv"
+    obj clr;
+    clr[0].val = "hello";
+    clr[1].val = "Tanay";
+    clr[2].val = "I";
+    clr[3].val = "am";
+    clr[4].val = "raj";
+    clr[5].val = "I";
+    clr[6].val = "would";
+    clr[7].val = "love";
+    clr[8].val = "to";
+    clr[9].val = "play";
+    clr[10].val = "with";
+    clr[11].val = "you";
+    clr[12].val = "i";
+    clr[13].val = "would";
+    clr[14].val = "challenge";
+    clr[15].val = "you";
+    clr[16].val = "to a";
+    clr[17].val = "match";
+    clr[18].val = "in";
+    clr[19].val = "basketball";
+    insert("./data/db.csv", clr, 20);
+    
 }
-
-
-
-
-
-
-
-
-
-
