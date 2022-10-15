@@ -1,41 +1,40 @@
 #include <stdio.h>
 #include "core/structures.h"
-// string filepath, obj object
-// fprintf(fpt, "hello");
-    // // 
+#include <stdlib.h>
+int generate_id(){
+    string filepath = "./data/id.txt";
+    FILE *fpt = fopen(filepath, "r");
+    int id = 0;
+    fscanf (fpt, "%d", &id);
+    id++;
+    printf("%d", id);
+    fclose(fpt);
+    FILE *fptr = fopen(filepath, "w");
+    fprintf(fptr, "%d", id);
+    fclose(fptr);
+    return(id);
+}
 void insert(string filepath, obj clr, int no_of_keywal_in_obj){
+    int id = generate_id();
     FILE *fpt = fopen(filepath, "a");
     int i;
-    for(i=0;i<20;i++){
-        fprintf(fpt, "%s\n",clr[no_of_keywal_in_obj].val);
+    fprintf(fpt, "%i,", id);
+    for(i=0;i<no_of_keywal_in_obj;i++){
+        fprintf(fpt, "%s,",clr[i].val);
     }
+    fprintf(fpt, "\n");
     fclose(fpt);
 }
-
-
-int main(void){
-    //"./data/db.csv"
-    obj clr;
-    clr[0].val = "hello";
-    clr[1].val = "Tanay";
-    clr[2].val = "I";
-    clr[3].val = "am";
-    clr[4].val = "raj";
-    clr[5].val = "I";
-    clr[6].val = "would";
-    clr[7].val = "love";
-    clr[8].val = "to";
-    clr[9].val = "play";
-    clr[10].val = "with";
-    clr[11].val = "you";
-    clr[12].val = "i";
-    clr[13].val = "would";
-    clr[14].val = "challenge";
-    clr[15].val = "you";
-    clr[16].val = "to a";
-    clr[17].val = "match";
-    clr[18].val = "in";
-    clr[19].val = "basketball";
-    insert("./data/db.csv", clr, 20);
-    
+void create(obj clr ,char* TrainID, char*Source, char*Destination){
+    clr[0].key = "TrainID";
+    clr[0].val = TrainID;
+    clr[1].key = "Source";
+    clr[1].val = Source;
+    clr[2].key = "Destination";
+    clr[2].val = Destination;
+}
+int main(void){  
+    obj clr;  
+    create(clr, "1011", "mumbai", "kolkata");
+    insert("./data/db.csv", clr, 3);
 }
