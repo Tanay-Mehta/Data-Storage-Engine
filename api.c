@@ -2,6 +2,7 @@
 #include "core/structures.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 void drop(string filepath_id, string filepath_data){
     int id = 0;
@@ -19,12 +20,54 @@ void drop(string filepath_id, string filepath_data){
     fclose(ptr);
 
 }
+void delete_line(int id, string filepath_data, string filepath_new_file){
+    
+    FILE* file, *temp;
+    file = fopen(filepath_data, "r");
+    temp = fopen(filepath_new_file, "w");
+    
+    char buffer[100];
+    int delete_line = find(id, filepath_data);
+    // if(delete_line == -1){
+    //     return 1;
+    // }
+    delete_line = delete_line + 2;
+    bool keep_reading = true;
+    int current_line = 1;
+    do{
+        fgets(buffer, 100, file);
+        if(feof(file)){
+            keep_reading = false;
+            }
+        else if(current_line != delete_line){
+            fprintf(temp, "%s", buffer);
+        }
+        current_line++;
+    }while(keep_reading);
+    remove(filepath_data);
+    rename(filepath_new_file, filepath_data);
+    fclose(file);
+    fclose(temp);
+	FILE *fptr1, *fptr2;
+	char filename[100], c;
+	fptr1 = fopen(filepath_new_file, "r");
+	fptr2 = fopen(filepath_data, "w");
+	c = fgetc(fptr1);
+	while (c != EOF)
+	{
+		fputc(c, fptr2);
+		c = fgetc(fptr1);
+	}
+	fclose(fptr1);
+	fclose(fptr2);
+    remove(filepath_new_file);
+}
 int insert(string filepath, obj clr, char* filepath_id){
     int id = generate_id(filepath_id);
     FILE *fpt = fopen(filepath, "a");
     int i;
     fprintf(fpt, "%i,", id);
-    for(i=0;i<6;i++){
+    for(i=0;i<5;i++){
         fprintf(fpt, "%s,",clr[i].val);
     }
     fprintf(fpt, "\n");
@@ -57,5 +100,9 @@ int generate_id(char *filepath){
     return(id);
 }
 int main(void){
-    drop("./data/id.txt", "./data/db.csv");
+    // obj train1;
+    // create(train1, "jdk", "mumbai", "pune", "1500", "15000");
+    // insert("./data/db.csv", train1, "./data/id.txt");
+    delete_line(10, "./data/db.csv", "./data/temp.csv");
+    // drop("./data/id.txt", "./data/db.csv");
 }

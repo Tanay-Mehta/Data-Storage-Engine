@@ -20,7 +20,7 @@ string find_row(string filepath, int no){
     return row_data;
 
 }
-string find(int id, char*filepath){
+int find(int id, char*filepath){
     char str[1000];
     FILE* pFile;
     pFile = fopen (filepath , "r");
@@ -28,20 +28,20 @@ string find(int id, char*filepath){
     int c;
     int f;
     string row_data;
-    int l = 0;
     string data = fgets(str, 100, pFile);
     for(i=0;i<3;i++){
         data = fgets(str, 2, pFile);
         c = atoi(str);
         if(c==id){
-            l++;
-            row_data = find_row(filepath, i);
-            fclose (pFile);
-            return row_data;
+            return i;
         }
         data = fgets(str, 100, pFile);
     }
     // printf("%s", str);
     fclose (pFile);
-    return NULL;
+    printf("no id found");
+    return -2;
+}
+int main(void){
+    
 }
