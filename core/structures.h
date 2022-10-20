@@ -10,12 +10,6 @@ typedef struct keyval{
 }keyval;
 
 typedef struct keyval obj[20];
-
-typedef struct dbid{
-    string value[20];
-}obid;
-
-
-
+typedef string dbid[20];
 
 #endif
