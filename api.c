@@ -148,8 +148,3 @@ int generate_id(char *filepath){
     fclose(fptr);
     return(id);
 }
-int main(void){
-    obj train1;
-    create(train1, "jdk", "mumba", "pne", "150", "15000");
-    update(1, "./data/db.csv", "./data/temp.csv", train1);
-}
