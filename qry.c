@@ -15,8 +15,8 @@ string find_row(string filepath, int no){
         row_data = fgets(data, 100, pFile);
     }
     row_data = fgets(data, 100, pFile);
-    printf("%s", row_data);
-    fclose (pFile);
+    // printf("%s", row_data);
+    fclose(pFile);
     return row_data;
 
 }
@@ -41,7 +41,4 @@ int find(int id, char*filepath){
     fclose (pFile);
     printf("no id found");
     return -2;
-}
-int main(void){
-    
 }

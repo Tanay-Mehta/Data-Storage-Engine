@@ -74,7 +74,56 @@ int insert(string filepath, obj clr, char* filepath_id){
     fclose(fpt);
     return id;
 }
-
+void update(int id, string filepath_data, string filepath_new_file, obj clr){
+    
+    FILE* file, *temp;
+    file = fopen(filepath_data, "r");
+    temp = fopen(filepath_new_file, "w");
+    
+    char buffer[100];
+    int delete_line = find(id, filepath_data);
+    // if(delete_line == -1){
+    //     return 1;
+    // }
+    delete_line = delete_line + 2;
+    bool keep_reading = true;
+    int current_line = 1;
+    do{
+        fgets(buffer, 100, file);
+        if(feof(file)){
+            keep_reading = false;
+            }
+        else if(current_line != delete_line){
+            fprintf(temp, "%s", buffer);
+        }
+        else{
+            int i;
+            fprintf(temp, "%i,", id);
+        for(i=0;i<5;i++){
+            fprintf(temp, "%s,",clr[i].val);
+            }
+        fprintf(temp, "\n");
+        }
+        current_line++;
+    }while(keep_reading);
+    remove(filepath_data);
+    rename(filepath_new_file, filepath_data);
+    fclose(file);
+    fclose(temp);
+	FILE *fptr1, *fptr2;
+	char filename[100], c;
+	fptr1 = fopen(filepath_new_file, "r");
+	fptr2 = fopen(filepath_data, "w");
+	c = fgetc(fptr1);
+	while (c != EOF)
+	{
+		fputc(c, fptr2);
+		c = fgetc(fptr1);
+	}
+	fclose(fptr1);
+	fclose(fptr2);
+    remove(filepath_new_file);
+}
 void create(obj clr ,char* TrainName, char*Source, char*Destination, char* Duration, char*Total_Seats){
     clr[0].key = "Train_Name";
     clr[0].val = TrainName;
@@ -100,9 +149,7 @@ int generate_id(char *filepath){
     return(id);
 }
 int main(void){
-    // obj train1;
-    // create(train1, "jdk", "mumbai", "pune", "1500", "15000");
-    // insert("./data/db.csv", train1, "./data/id.txt");
-    delete_line(10, "./data/db.csv", "./data/temp.csv");
-    // drop("./data/id.txt", "./data/db.csv");
+    obj train1;
+    create(train1, "jdk", "mumba", "pne", "150", "15000");
+    update(1, "./data/db.csv", "./data/temp.csv", train1);
 }

@@ -18,5 +18,6 @@ void create(obj clr ,char* TrainName, char*Source, char*Destination, char* Durat
 int generate_id(char *filepath);
 string find_row(string filepath, int no);
 int find(int id, char*filepath);
+void delete_line(int id, string filepath_data, string filepath_new_file);
 
 #endif
